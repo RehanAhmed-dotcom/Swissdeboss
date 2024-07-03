@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "33372493414",
+    "project_id": "swissdeboss-5079b",
+    "storage_bucket": "swissdeboss-5079b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33372493414:android:09ab640725653d4b5b7fa7",
+        "android_client_info": {
+          "package_name": "com.swissdeboss"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyX7x9V6IViCpt4WgTWI7OJK_K4eNQaxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
