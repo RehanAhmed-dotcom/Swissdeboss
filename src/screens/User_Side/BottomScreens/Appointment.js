@@ -18,12 +18,20 @@ import {useFocusEffect} from '@react-navigation/native';
 import {AllGetAPI} from '../../../components/Apis/Api_Screen';
 import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 
 const Appointment = ({navigation}) => {
   const user = useSelector(state => state?.user?.user);
-
-  const conditions = ['All', 'Pending', 'Active', 'Cancelled', 'Completed'];
-  const [activeCondition, setActiveCondition] = useState('All');
+  const {t} = useTranslation();
+  const conditionMap = {
+    All: t('All'),
+    Pending: t('Pending'),
+    Active: t('Active'),
+    Cancelled: t('Cancelled'),
+    Completed: t('Completed'),
+  };
+  const conditions = Object.values(conditionMap);
+  const [activeCondition, setActiveCondition] = useState(conditionMap.All);
   const [appointmentsData, setAppointmentsData] = useState({
     active_appointments: [],
     appointments: [],
@@ -39,7 +47,7 @@ const Appointment = ({navigation}) => {
   const getConditionColor = condition => {
     switch (condition) {
       case 'pending':
-        return Colors.gray; // or your desired color for pending
+        return Colors.gray;
       case 'active':
         return Colors.blue;
       case 'completed':
@@ -47,14 +55,14 @@ const Appointment = ({navigation}) => {
       case 'cancelled':
         return Colors.red;
       default:
-        return Colors.black; // or any default color you prefer
+        return Colors.black;
     }
   };
+
   const fetchRentalData = () => {
     AllGetAPI({url: 'getallappointments', Token: user?.api_token})
       .then(res => {
         setAppointmentsData(res);
-        // console.log('rental all added appointment data', res);
       })
       .catch(err => {
         console.log('api error', err);
@@ -67,26 +75,34 @@ const Appointment = ({navigation}) => {
     }, []),
   );
 
-  const filteredData =
-    activeCondition === 'All'
-      ? [].concat(
-          ...appointmentsData.active_appointments,
-          ...appointmentsData.pending_appointments,
-          ...appointmentsData.cancelled_appointments,
-          ...appointmentsData.completed_appointments,
-        )
-      : appointmentsData[`${activeCondition.toLowerCase()}_appointments`];
+  const getFilteredData = () => {
+    if (activeCondition === conditionMap.All) {
+      return [].concat(
+        ...appointmentsData.active_appointments,
+        ...appointmentsData.pending_appointments,
+        ...appointmentsData.cancelled_appointments,
+        ...appointmentsData.completed_appointments,
+      );
+    } else {
+      const key = Object.keys(conditionMap).find(
+        key => conditionMap[key] === activeCondition,
+      );
+      return appointmentsData[`${key.toLowerCase()}_appointments`] || [];
+    }
+  };
+
+  const filteredData = getFilteredData();
   const {top} = useSafeAreaInsets();
-  // console.log('filteredData0000000000000-----------------------', filteredData);
+
   return (
     <View style={{flex: 1, backgroundColor: Colors.bback}}>
       <StatusBar translucent={true} />
       <View
         style={{
           flex: 1,
-          marginTop: Platform.OS == 'ios' ? top : StatusBar.currentHeight,
+          marginTop: Platform.OS === 'ios' ? top : StatusBar.currentHeight,
         }}>
-        <Text style={styles.headerText}>Appointments</Text>
+        <Text style={styles.headerText}>{t('Appointments')}</Text>
         <View style={{marginLeft: wp(3), marginVertical: wp(4)}}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {conditions.map((item, index) => (
@@ -116,12 +132,8 @@ const Appointment = ({navigation}) => {
               filteredData.map((item, index) => (
                 <View key={index} style={styles.data_box}>
                   <View style={styles.row}>
-                    <View
-                      style={{
-                        // backgroundColor: 'red',
-                        width: wp(64),
-                      }}>
-                      <Text style={styles.type}>{item.package.name}</Text>
+                    <View style={{width: wp(64)}}>
+                      <Text style={styles.type}>{item.category.name}</Text>
                       <Text numberOfLines={3} style={styles.des}>
                         {item.description}
                       </Text>
@@ -130,8 +142,8 @@ const Appointment = ({navigation}) => {
                     <View style={styles.row2}>
                       <View style={styles.line}></View>
                       <View style={{alignItems: 'center'}}>
-                        <Text style={styles.currency}>CHF</Text>
-                        <Text style={styles.price}>{item.package.price}</Text>
+                        <Text style={styles.currency}>Cars</Text>
+                        <Text style={styles.price}>{item.no_of_cars}</Text>
                       </View>
                     </View>
                   </View>
@@ -141,7 +153,6 @@ const Appointment = ({navigation}) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      // backgroundColor: 'red',
                       marginHorizontal: wp(5),
                     }}>
                     <View></View>
@@ -169,7 +180,7 @@ const Appointment = ({navigation}) => {
                             color: Colors.green,
                             fontSize: 14,
                           }}>
-                          Invoice
+                          {t('Invoice')}
                         </Text>
                       </TouchableOpacity>
                     ) : (
@@ -190,6 +201,7 @@ const Appointment = ({navigation}) => {
                   resizeMode="contain"
                   style={styles.nodata}
                 />
+                <Text>{t('No Data Available')}</Text>
               </View>
             )}
           </View>
@@ -215,7 +227,6 @@ const styles = StyleSheet.create({
     paddingVertical: wp(1),
     marginHorizontal: wp(2),
     borderRadius: 5,
-    // backgroundColor: 'red',
   },
   conditions_text: {
     color: Colors.blue,
@@ -263,7 +274,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: 'pink',
     width: wp(15),
   },
   line: {
@@ -292,12 +302,10 @@ const styles = StyleSheet.create({
     color: Colors.blue,
     fontSize: 14,
     fontFamily: fonts.BOLD,
-    // backgroundColor: 'pink',
   },
   nodata: {
     width: wp(80),
     height: wp(80),
-    // alignSelf: 'center',
     marginTop: wp(20),
   },
 });

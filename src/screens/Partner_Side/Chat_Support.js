@@ -197,209 +197,212 @@ const Chat_Support = ({navigation, route}) => {
           <Text style={styles.headerText}>{guestData.username}</Text>
           <View></View>
         </View>
+        <Wrapper behavior="padding" style={{flex: 1}}>
+          <View style={{flex: 1, paddingTop: 10}}>
+            <FlatList
+              inverted
+              data={firbasemsg}
+              renderItem={({item, index}) => {
+                const isCurrentUser =
+                  item?.sendBy === user?.email.replace(/[^a-zA-Z0-9 ]/g, '');
+                const isSticker = item.msg.startsWith('data:image/png;base64,');
 
-        <View style={{flex: 1, paddingTop: 10}}>
-          <FlatList
-            inverted
-            data={firbasemsg}
-            renderItem={({item, index}) => {
-              const isCurrentUser =
-                item?.sendBy === user?.email.replace(/[^a-zA-Z0-9 ]/g, '');
-              const isSticker = item.msg.startsWith('data:image/png;base64,');
-
-              return (
-                <>
-                  {!isCurrentUser ? (
-                    item?.msg?.slice(-4) == '.jpg' ||
-                    item?.msg?.slice(-4) == '.png' ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'flex-end',
-                          marginVertical: 8,
-                          marginLeft: 10,
-                        }}>
-                        <Image
-                          style={stylemain.senderimg}
-                          source={icons.logo}
-                          resizeMode="cover"
-                        />
-                        <TouchableOpacity
-                          onPress={() => {
-                            setChatImgView(true), setChatImg(item.msg);
-                          }}
-                          activeOpacity={0.9}
-                          style={{
-                            width: wp(30),
-                            height: wp(40),
-                            backgroundColor: '#525252',
-                            // alignSelf: 'flex-end',
-                            borderBottomRightRadius: 10,
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            marginLeft: 5,
-                          }}>
-                          <ImageBackground
-                            style={{width: wp(30), height: wp(36)}}
-                            source={{uri: item?.msg}}
-                            resizeMode="cover"
-                            borderTopLeftRadius={10}
-                            borderTopRightRadius={10}
-                            borderBottomRightRadius={10}>
-                            <Text
-                              style={[
-                                stylemain.chatTimeR,
-                                {
-                                  alignSelf: 'flex-start',
-                                  color: Colors.white,
-                                  marginLeft: 5,
-                                  top: 1,
-                                },
-                              ]}>
-                              {/* {moment(item.date).format('hh:mm A')} */}
-                              12:18
-                            </Text>
-                          </ImageBackground>
-                        </TouchableOpacity>
-                      </View>
-                    ) : item?.msg?.slice(-4) == '.gif' ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'flex-end',
-                          marginVertical: 8,
-                          marginLeft: 10,
-                        }}>
-                        <Image
-                          style={stylemain.senderimg}
-                          source={icons.logo}
-                          resizeMode="cover"
-                        />
-                        <TouchableOpacity
-                          onPress={() => {
-                            setChatImgView(true), setChatImg(item.msg);
-                          }}
-                          activeOpacity={0.9}
-                          style={{
-                            width: wp(30),
-                            height: wp(40),
-                            backgroundColor: '#525252',
-                            // alignSelf: 'flex-end',
-                            borderBottomRightRadius: 10,
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            marginLeft: 5,
-                          }}>
-                          <ImageBackground
-                            style={{width: wp(30), height: wp(35)}}
-                            source={{uri: item?.msg}}
-                            resizeMode="cover"
-                            borderTopLeftRadius={10}
-                            borderTopRightRadius={10}
-                            borderBottomRightRadius={10}>
-                            <Text
-                              style={[
-                                stylemain.chatTimeR,
-                                {
-                                  alignSelf: 'flex-start',
-                                  color: Colors.white,
-                                  marginLeft: 5,
-                                  top: 1,
-                                },
-                              ]}>
-                              {moment(item?.date).format('hh:mm A')}
-                            </Text>
-                          </ImageBackground>
-                        </TouchableOpacity>
-                      </View>
-                    ) : (
-                      <View>
+                return (
+                  <>
+                    {!isCurrentUser ? (
+                      item?.msg?.slice(-4) == '.jpg' ||
+                      item?.msg?.slice(-4) == '.png' ? (
                         <View
                           style={{
                             flexDirection: 'row',
                             alignItems: 'flex-end',
-                            marginLeft: 8,
+                            marginVertical: 8,
+                            marginLeft: 10,
                           }}>
                           <Image
                             style={stylemain.senderimg}
                             source={icons.logo}
                             resizeMode="cover"
                           />
-                          <View style={stylemain.chatItemLft}>
-                            <Text style={[stylemain.sender]}>{item?.msg}</Text>
-                          </View>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setChatImgView(true), setChatImg(item.msg);
+                            }}
+                            activeOpacity={0.9}
+                            style={{
+                              width: wp(30),
+                              height: wp(40),
+                              backgroundColor: '#525252',
+                              // alignSelf: 'flex-end',
+                              borderBottomRightRadius: 10,
+                              borderTopLeftRadius: 10,
+                              borderTopRightRadius: 10,
+                              marginLeft: 5,
+                            }}>
+                            <ImageBackground
+                              style={{width: wp(30), height: wp(36)}}
+                              source={{uri: item?.msg}}
+                              resizeMode="cover"
+                              borderTopLeftRadius={10}
+                              borderTopRightRadius={10}
+                              borderBottomRightRadius={10}>
+                              <Text
+                                style={[
+                                  stylemain.chatTimeR,
+                                  {
+                                    alignSelf: 'flex-start',
+                                    color: Colors.white,
+                                    marginLeft: 5,
+                                    top: 1,
+                                  },
+                                ]}>
+                                {/* {moment(item.date).format('hh:mm A')} */}
+                                12:18
+                              </Text>
+                            </ImageBackground>
+                          </TouchableOpacity>
                         </View>
-                        <Text
+                      ) : item?.msg?.slice(-4) == '.gif' ? (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'flex-end',
+                            marginVertical: 8,
+                            marginLeft: 10,
+                          }}>
+                          <Image
+                            style={stylemain.senderimg}
+                            source={icons.logo}
+                            resizeMode="cover"
+                          />
+                          <TouchableOpacity
+                            onPress={() => {
+                              setChatImgView(true), setChatImg(item.msg);
+                            }}
+                            activeOpacity={0.9}
+                            style={{
+                              width: wp(30),
+                              height: wp(40),
+                              backgroundColor: '#525252',
+                              // alignSelf: 'flex-end',
+                              borderBottomRightRadius: 10,
+                              borderTopLeftRadius: 10,
+                              borderTopRightRadius: 10,
+                              marginLeft: 5,
+                            }}>
+                            <ImageBackground
+                              style={{width: wp(30), height: wp(35)}}
+                              source={{uri: item?.msg}}
+                              resizeMode="cover"
+                              borderTopLeftRadius={10}
+                              borderTopRightRadius={10}
+                              borderBottomRightRadius={10}>
+                              <Text
+                                style={[
+                                  stylemain.chatTimeR,
+                                  {
+                                    alignSelf: 'flex-start',
+                                    color: Colors.white,
+                                    marginLeft: 5,
+                                    top: 1,
+                                  },
+                                ]}>
+                                {moment(item?.date).format('hh:mm A')}
+                              </Text>
+                            </ImageBackground>
+                          </TouchableOpacity>
+                        </View>
+                      ) : (
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'flex-end',
+                              marginLeft: 8,
+                            }}>
+                            <Image
+                              style={stylemain.senderimg}
+                              source={icons.logo}
+                              resizeMode="cover"
+                            />
+                            <View style={stylemain.chatItemLft}>
+                              <Text style={[stylemain.sender]}>
+                                {item?.msg}
+                              </Text>
+                            </View>
+                          </View>
+                          <Text
+                            style={[
+                              stylemain.chatTimeL,
+                              {alignSelf: 'flex-start'},
+                            ]}>
+                            {moment(item.date).format('hh:mm A')}
+                          </Text>
+                        </View>
+                      )
+                    ) : (
+                      <View>
+                        <View
                           style={[
-                            stylemain.chatTimeL,
-                            {alignSelf: 'flex-start'},
+                            stylemain.chatItemRit,
+                            {
+                              alignSelf: 'flex-end',
+                              borderTopRightRadius: 10,
+                              borderTopLeftRadius: 10,
+                              borderBottomLeftRadius: 10,
+                              marginRight: 10,
+                              // backgroundColor: Colors.g,
+                              marginVertical: 10,
+                              paddingHorizontal: wp(3),
+                            },
                           ]}>
-                          {moment(item.date).format('hh:mm A')}
+                          <Text style={stylemain.reciver}>{item?.msg}</Text>
+                        </View>
+                        <Text style={stylemain.chatTimeR}>
+                          {moment(item?.date).format('hh:mm A')}
                         </Text>
                       </View>
-                    )
-                  ) : (
-                    <View>
-                      <View
-                        style={[
-                          stylemain.chatItemRit,
-                          {
-                            alignSelf: 'flex-end',
-                            borderTopRightRadius: 10,
-                            borderTopLeftRadius: 10,
-                            borderBottomLeftRadius: 10,
-                            marginRight: 10,
-                            // backgroundColor: Colors.g,
-                            marginVertical: 10,
-                            paddingHorizontal: wp(3),
-                          },
-                        ]}>
-                        <Text style={stylemain.reciver}>{item?.msg}</Text>
-                      </View>
-                      <Text style={stylemain.chatTimeR}>
-                        {moment(item?.date).format('hh:mm A')}
-                      </Text>
-                    </View>
-                  )}
-                </>
-              );
-            }}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              // backgroundColor: '#F2F2F2',
-              justifyContent: 'center',
-              height: 70,
-            }}>
-            <View style={stylemain.singlechatinput}>
-              <TextInput
-                style={stylemain.chatinput}
-                placeholder="Type Your Message"
-                multiline={true}
-                placeholderTextColor={Colors.gray}
-                onChangeText={text => {
-                  setFocus(text.trim().length > 0), setMessage(text);
-                }}
-                // value={
-                //   message.startsWith('data:image/png;base64,')
-                //     ? 'Send Sticker'
-                //     : message
-                // }
-                value={message}
-                // returnKeyLabel="Send"
-                // returnKeyType="send"
-              />
-              <TouchableOpacity
-                onPress={() => handleSend()}
-                activeOpacity={0.8}
-                style={{marginRight: 18}}>
-                <FontAwesome name={'send'} size={20} color={'#007EF4'} />
-              </TouchableOpacity>
+                    )}
+                  </>
+                );
+              }}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                // backgroundColor: '#F2F2F2',
+                justifyContent: 'center',
+                height: 70,
+              }}>
+              <View style={stylemain.singlechatinput}>
+                <TextInput
+                  style={stylemain.chatinput}
+                  placeholder="Type Your Message"
+                  multiline={true}
+                  placeholderTextColor={Colors.gray}
+                  onChangeText={text => {
+                    setFocus(text.trim().length > 0), setMessage(text);
+                  }}
+                  // value={
+                  //   message.startsWith('data:image/png;base64,')
+                  //     ? 'Send Sticker'
+                  //     : message
+                  // }
+                  value={message}
+                  // returnKeyLabel="Send"
+                  // returnKeyType="send"
+                />
+                <TouchableOpacity
+                  onPress={() => handleSend()}
+                  activeOpacity={0.8}
+                  style={{marginRight: 18}}>
+                  <FontAwesome name={'send'} size={20} color={'#007EF4'} />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        </Wrapper>
         {/* </ScrollView> */}
       </View>
     </View>

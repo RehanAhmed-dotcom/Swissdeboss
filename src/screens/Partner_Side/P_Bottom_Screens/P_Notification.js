@@ -20,27 +20,9 @@ import {useSelector} from 'react-redux';
 import {AllGetAPI, PostAPiwithToken} from '../../../components/Apis/Api_Screen';
 import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../../components/Loader';
+import {useTranslation} from 'react-i18next';
 const P_Notification = () => {
-  const Notification = [
-    {
-      key: '1',
-      Text: 'Appointment Invoice',
-      icon: icons.tick,
-      des: 'Qrygg elomin kashyyyk skirata. Oswaft mirta omwati kohl shmi.',
-    },
-    {
-      key: '2',
-      Text: 'Well done Anakin!',
-      icon: icons.tick,
-      des: 'Qrygg elomin kashyyyk skirata. Oswaft mirta omwati kohl shmi.',
-    },
-    {
-      key: '3',
-      Text: 'You were the chosen one!',
-      icon: icons.Alert,
-      des: 'Qrygg elomin kashyyyk skirata. Oswaft mirta omwati kohl shmi.',
-    },
-  ];
+  const {t} = useTranslation();
 
   const user = useSelector(state => state?.user?.user);
   const [RecivedNoti, setRecivedNoti] = useState([]);
@@ -103,7 +85,7 @@ const P_Notification = () => {
       <StatusBar translucent={true} />
       {IsLoading && <Loader />}
       <View style={{flex: 1, marginTop: StatusBar.currentHeight}}>
-        <Text style={styles.headerText}>Notification</Text>
+        <Text style={styles.headerText}>{t('Notification')}</Text>
         <ScrollView>
           {RecivedNoti.length === 0 ? (
             <View

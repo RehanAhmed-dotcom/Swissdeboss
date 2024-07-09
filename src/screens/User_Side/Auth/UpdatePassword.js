@@ -27,9 +27,11 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import Loader from '../../../components/Loader';
+import {useTranslation} from 'react-i18next';
 
 const CELL_COUNT = 4;
 const UpdatePassword = ({navigation, route}) => {
+  const {t} = useTranslation();
   const {email, value} = route.params;
   console.log('email on update', email);
   console.log('value on update', value);
@@ -131,13 +133,10 @@ const UpdatePassword = ({navigation, route}) => {
                   />
                 </TouchableOpacity>
 
-                <Text style={styles.header_text}>Upgrade Password</Text>
+                <Text style={styles.header_text}>{t('UpgradePassword')}</Text>
                 <View></View>
               </View>
-              <Text style={styles.text}>
-                Your identity has been Varified! {'\n'}
-                set your new password
-              </Text>
+              <Text style={styles.text}>{t('identityverified')}</Text>
 
               <View style={{marginTop: wp(20)}}>
                 <View style={styles.input_Box}>
@@ -147,7 +146,7 @@ const UpdatePassword = ({navigation, route}) => {
                     style={styles.profile}
                   />
                   <TextInput
-                    placeholder="Password"
+                    placeholder={t('NewPassword')}
                     placeholderTextColor={Colors.verylightgray}
                     style={styles.input}
                     secureTextEntry={true}
@@ -167,7 +166,7 @@ const UpdatePassword = ({navigation, route}) => {
                     style={styles.profile}
                   />
                   <TextInput
-                    placeholder="Password"
+                    placeholder={t('ConfirmPassword')}
                     placeholderTextColor={Colors.verylightgray}
                     style={styles.input}
                     secureTextEntry={true}
@@ -183,7 +182,7 @@ const UpdatePassword = ({navigation, route}) => {
 
               <View style={{marginTop: wp(30), marginBottom: wp(10)}}>
                 <Button
-                  title="Update"
+                  title={t('Upgrade')}
                   onPress={() => {
                     handleSubmit();
                   }}

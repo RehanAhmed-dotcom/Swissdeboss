@@ -26,6 +26,7 @@ import {useSelector} from 'react-redux';
 import {PostAPiwithToken} from '../../components/Apis/Api_Screen';
 import Loader from '../../components/Loader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 const Change_Password = ({navigation}) => {
   const user = useSelector(state => state?.user?.user);
   console.log('user on change password', user);
@@ -92,6 +93,7 @@ const Change_Password = ({navigation}) => {
   };
   const Wrapper = Platform.OS == 'ios' ? KeyboardAvoidingView : View;
   const {top} = useSafeAreaInsets();
+  const {t} = useTranslation();
   return (
     <Formik
       initialValues={{
@@ -143,7 +145,7 @@ const Change_Password = ({navigation}) => {
                     />
                   </TouchableOpacity>
 
-                  <Text style={styles.header_text}>Change Password</Text>
+                  <Text style={styles.header_text}>{t('ChangePassword')}</Text>
                   <View></View>
                 </View>
                 <Image
@@ -164,7 +166,7 @@ const Change_Password = ({navigation}) => {
                     style={styles.profile}
                   />
                   <TextInput
-                    placeholder="Old Password"
+                    placeholder={t('OldPassword')}
                     placeholderTextColor={Colors.verylightgray}
                     style={styles.input}
                     secureTextEntry={true}
@@ -184,7 +186,7 @@ const Change_Password = ({navigation}) => {
                     style={styles.profile}
                   />
                   <TextInput
-                    placeholder="New Password"
+                    placeholder={t('NewPassword')}
                     placeholderTextColor={Colors.verylightgray}
                     style={styles.input}
                     secureTextEntry={true}
@@ -204,7 +206,7 @@ const Change_Password = ({navigation}) => {
                     style={styles.profile}
                   />
                   <TextInput
-                    placeholder="Confirem Password"
+                    placeholder={t('ConfirmPassword')}
                     placeholderTextColor={Colors.verylightgray}
                     style={styles.input}
                     secureTextEntry={true}
@@ -218,7 +220,7 @@ const Change_Password = ({navigation}) => {
                 )}
                 <View style={{marginTop: wp(30), marginBottom: wp(10)}}>
                   <Button
-                    title="Confirm"
+                    title={t('Confirm')}
                     onPress={() => {
                       handleSubmit();
                     }}

@@ -23,10 +23,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {AllGetAPI, PostAPiwithToken} from '../../components/Apis/Api_Screen';
 import Loader from '../../components/Loader';
+import {useTranslation} from 'react-i18next';
 const Invoices_List = ({navigation, route}) => {
   const user = useSelector(state => state?.user?.user);
   console.log('user on invoces list', user);
-
+  const {t} = useTranslation();
   const [IsLoading, setIsLoading] = useState(false);
   const [invoceData, setinvoceData] = useState([]);
 
@@ -62,7 +63,7 @@ const Invoices_List = ({navigation, route}) => {
               }}>
               <Back name="chevron-back-outline" color="#003C3C" size={22} />
             </TouchableOpacity>
-            <Text style={styles.headerText}>Invoices List</Text>
+            <Text style={styles.headerText}>{t('invoiceslist')}</Text>
             <View></View>
           </View>
           <View style={{marginTop: wp(8)}}>

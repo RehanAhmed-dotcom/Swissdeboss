@@ -27,9 +27,12 @@ import {PostAPiwithFrom} from '../../../components/Apis/Api_Screen';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUser} from '../../../ReduxToolkit/Auth';
 import Loader from '../../../components/Loader';
+import {useTranslation} from 'react-i18next';
+
 const SignUp = ({navigation, route}) => {
   const type = useSelector(state => state?.userType?.userType);
   console.log('type on on Signup', type);
+  const {t} = useTranslation();
 
   const pickImage = async setFieldValue => {
     try {
@@ -64,11 +67,6 @@ const SignUp = ({navigation, route}) => {
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
         'Must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character',
       ),
-    // repassword: yup
-    //   .string()
-    //   .oneOf([yup.ref('password'), null], 'Passwords must match')
-    //   .required('Please confirm your password'),
-    image: yup.string().required('Please select an image'),
     mobile: yup.string().required('Mobile number is required'),
     address: yup.string().required('Address  is required'),
   });
@@ -86,20 +84,18 @@ const SignUp = ({navigation, route}) => {
     setIsLoading(true);
 
     const formdata = new FormData();
-    //username   type
     formdata.append('type', type);
     formdata.append('username', username);
     formdata.append('email', email);
     formdata.append('password', password);
     formdata.append('phone_number', mobile);
     formdata.append('address', address);
-    {
-      image &&
-        formdata.append('image', {
-          uri: image,
-          type: 'image/jpeg',
-          name: `image${new Date()}.jpg`,
-        });
+    if (image) {
+      formdata.append('image', {
+        uri: image,
+        type: 'image/jpeg',
+        name: `image${new Date()}.jpg`,
+      });
     }
 
     PostAPiwithFrom({url: 'register'}, formdata)
@@ -107,9 +103,6 @@ const SignUp = ({navigation, route}) => {
         if (res.status == 'success') {
           setIsLoading(false);
           dispatch(setUser(res.userdata));
-          // Dispatching the setUser action with user details and userType
-          // dispatch(setUser(res.userdata));
-
           ToastAndroid.show(
             'Your Account has been created!',
             ToastAndroid.SHORT,
@@ -130,7 +123,9 @@ const SignUp = ({navigation, route}) => {
         console.log('api error', err);
       });
   };
+
   const Wrapper = Platform.OS == 'ios' ? KeyboardAvoidingView : View;
+
   return (
     <Formik
       initialValues={{
@@ -144,8 +139,6 @@ const SignUp = ({navigation, route}) => {
       }}
       validateOnMount={true}
       onSubmit={values => {
-        // console.log('values', values);
-        // navigation.navigate('OnBoarding');
         _registerAPI(
           values.username,
           values.email,
@@ -181,7 +174,7 @@ const SignUp = ({navigation, route}) => {
             }}>
             <Wrapper behavior="padding">
               <ScrollView>
-                <Text style={styles.header_text}>Create account</Text>
+                <Text style={styles.header_text}>{t('CreateAccount')}</Text>
                 <TouchableOpacity
                   style={styles.too}
                   onPress={() => pickImage(setFieldValue)}>
@@ -192,9 +185,6 @@ const SignUp = ({navigation, route}) => {
                     borderRadius={100}
                   />
                 </TouchableOpacity>
-                {errors.image && touched.image && (
-                  <Text style={[styles.imageerr]}>{errors.image}</Text>
-                )}
 
                 <View style={{marginTop: wp(6)}}>
                   <View style={styles.input_Box}>
@@ -204,7 +194,7 @@ const SignUp = ({navigation, route}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Username"
+                      placeholder={t('Username')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       onChangeText={handleChange('username')}
@@ -224,7 +214,7 @@ const SignUp = ({navigation, route}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Password"
+                      placeholder={t('password')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       secureTextEntry={true}
@@ -264,7 +254,7 @@ const SignUp = ({navigation, route}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Mobile"
+                      placeholder={t('Mobile')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       keyboardType="phone-pad"
@@ -285,7 +275,7 @@ const SignUp = ({navigation, route}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Address"
+                      placeholder={t('Address')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       onChangeText={handleChange('address')}
@@ -300,7 +290,7 @@ const SignUp = ({navigation, route}) => {
 
                 <View style={{marginTop: wp(16)}}>
                   <Button
-                    title="Sign up"
+                    title={t('Signup')}
                     onPress={() => {
                       handleSubmit();
                     }}
@@ -314,8 +304,8 @@ const SignUp = ({navigation, route}) => {
                     navigation.navigate('Login');
                   }}>
                   <Text style={styles.text}>
-                    Already have a account?{' '}
-                    <Text style={styles.create}>Login</Text>
+                    {t('Alreadyhaveanaccount')}?{' '}
+                    <Text style={styles.create}>{t('login')}</Text>
                   </Text>
                 </TouchableOpacity>
 

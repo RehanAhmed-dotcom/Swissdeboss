@@ -56,7 +56,7 @@ const Root = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {type === '' ? (
           <>
-            {/* <Stack.Screen component={Languages} name="Languages" /> */}
+            <Stack.Screen component={Languages} name="Languages" />
             <Stack.Screen component={Select} name="Select" />
           </>
         ) : (

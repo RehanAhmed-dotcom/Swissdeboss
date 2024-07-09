@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "33372493414",
-    "project_id": "swissdeboss-5079b",
-    "storage_bucket": "swissdeboss-5079b.appspot.com"
+    "project_number": "417646822472",
+    "firebase_url": "https://swissdeboss-4b869-default-rtdb.firebaseio.com",
+    "project_id": "swissdeboss-4b869",
+    "storage_bucket": "swissdeboss-4b869.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:33372493414:android:09ab640725653d4b5b7fa7",
+        "mobilesdk_app_id": "1:417646822472:android:761fef75bd29aa83b3047d",
         "android_client_info": {
           "package_name": "com.swissdeboss"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAyX7x9V6IViCpt4WgTWI7OJK_K4eNQaxw"
+          "current_key": "AIzaSyB6zr4CitA0FMiupBwCCJ32P59cczzwfto"
         }
       ],
       "services": {

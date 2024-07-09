@@ -23,6 +23,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {AllGetAPI} from '../../components/Apis/Api_Screen';
 import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 
 const Cancelled_Detail = ({navigation, route}) => {
   const user = useSelector(state => state?.user?.user);
@@ -52,6 +53,7 @@ const Cancelled_Detail = ({navigation, route}) => {
       _FetchAppointmentsAPiPending();
     }, []),
   );
+  const {t} = useTranslation();
   const {top} = useSafeAreaInsets();
   return (
     <View style={{flex: 1, backgroundColor: Colors.bback}}>
@@ -69,7 +71,7 @@ const Cancelled_Detail = ({navigation, route}) => {
               }}>
               <Back name="chevron-back-outline" color="#003C3C" size={22} />
             </TouchableOpacity>
-            <Text style={styles.headerText}>Cancelled Appointments</Text>
+            <Text style={styles.headerText}>{t('cnclappoit')} </Text>
             <View></View>
           </View>
 
@@ -101,7 +103,7 @@ const Cancelled_Detail = ({navigation, route}) => {
                           marginLeft: wp(2),
                         }}>
                         <Text numberOfLines={1} style={styles.type}>
-                          {item.package.category.name}
+                          {item.category.name}
                         </Text>
 
                         <Text numberOfLines={3} style={styles.des}>

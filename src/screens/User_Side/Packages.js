@@ -29,8 +29,10 @@ import {PostAPiwithToken} from '../../components/Apis/Api_Screen';
 import {useSelector} from 'react-redux';
 import Loader from '../../components/Loader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 
 const Packages = ({navigation, route}) => {
+  const {t} = useTranslation();
   const {item} = route.params;
   console.log('item on packages', item.packages);
   const user = useSelector(state => state?.user?.user);
@@ -117,6 +119,10 @@ const Packages = ({navigation, route}) => {
       });
   };
   const {top} = useSafeAreaInsets();
+
+  // Calculate the minimum selectable date
+  const minimumSelectableDate = moment().add(4, 'days').toDate();
+
   return (
     <View style={{flex: 1, backgroundColor: Colors.bback}}>
       {IsLoading && <Loader />}
@@ -181,7 +187,7 @@ const Packages = ({navigation, route}) => {
                       }}
                       style={styles.Button}
                       activeOpacity={0.7}>
-                      <Text style={styles.butonText}>Select Package</Text>
+                      <Text style={styles.butonText}>{t('SelectPackage')}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -204,7 +210,7 @@ const Packages = ({navigation, route}) => {
           },
         }}>
         <ScrollView>
-          <Text style={styles.schedule}>Scheduling</Text>
+          <Text style={styles.schedule}>{t('Scheduling')}</Text>
           <Image source={images.watch} style={styles.watch} />
           <TouchableOpacity
             activeOpacity={0.9}
@@ -237,8 +243,8 @@ const Packages = ({navigation, route}) => {
             />
             <Text style={styles.select}>
               {SelectedTime
-                ? moment(SelectedTime, 'HH:mm').format('HH:mm') // Corrected format
-                : 'Select Time'}
+                ? moment(SelectedTime, 'HH:mm').format('HH:mm')
+                : t('SelectTime')}
             </Text>
           </TouchableOpacity>
 
@@ -250,7 +256,7 @@ const Packages = ({navigation, route}) => {
             />
             {/* <Text style={styles.select}>Select Address</Text> */}
             <TextInput
-              placeholder="Add Address"
+              placeholder={t('AddAddress')}
               placeholderTextColor="#9A9A9A"
               style={styles.addaddressinput}
               value={address}
@@ -268,7 +274,7 @@ const Packages = ({navigation, route}) => {
             />
             {/* <Text style={styles.select}>Select Address</Text> */}
             <TextInput
-              placeholder="Write a note"
+              placeholder={t('WriteNote')}
               placeholderTextColor="#9A9A9A"
               style={styles.inputtext}
               multiline
@@ -281,7 +287,7 @@ const Packages = ({navigation, route}) => {
 
           <View style={{marginTop: wp(10)}}>
             <Button
-              title="Next"
+              title={t('Next')}
               onPress={() => {
                 // thankyouSheet.current.open();
                 // refRBSheet.current.close();
@@ -305,6 +311,7 @@ const Packages = ({navigation, route}) => {
             mode="date"
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
+            minimumDate={minimumSelectableDate}
           />
 
           <DateTimePicker

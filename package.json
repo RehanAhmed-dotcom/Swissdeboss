@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-clipboard/clipboard": "^1.14.1",
     "@react-native-community/datetimepicker": "^7.6.3",
     "@react-native-community/push-notification-ios": "^1.11.0",
     "@react-native-firebase/app": "^20.0.0",
@@ -22,8 +23,10 @@
     "@reduxjs/toolkit": "^2.2.4",
     "axios": "^1.6.8",
     "formik": "^2.4.5",
+    "i18next": "^23.11.5",
     "moment": "^2.30.1",
     "react": "18.2.0",
+    "react-i18next": "^14.1.2",
     "react-native": "0.72.6",
     "react-native-blob-util": "^0.19.9",
     "react-native-confirmation-code-field": "^7.4.0",
@@ -49,6 +52,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
     "reduxjs-toolkit-persist": "^7.2.1",
+    "translate-google-api": "^1.0.4",
     "yup": "^1.4.0"
   },
   "devDependencies": {

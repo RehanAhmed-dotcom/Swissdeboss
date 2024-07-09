@@ -26,10 +26,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PostAPiwithToken} from '../../components/Apis/Api_Screen';
 import Loader from '../../components/Loader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 const P_Edit_Profile = ({navigation}) => {
   const user = useSelector(state => state?.user?.user);
   console.log('user on Profile', user);
-
+  const {t} = useTranslation();
   const dispatch = useDispatch();
 
   const [image, setImage] = useState(user?.image);
@@ -72,12 +73,14 @@ const P_Edit_Profile = ({navigation}) => {
         if (res.status == 'success') {
           setIsLoading(false);
           dispatch(setUser(res.userdata));
-          navigation.navigate('P_Profile');
+          navigation.navigate('P_Bottom_Navigation', {screen: 'P_Profile'});
           ToastAndroid.show('Data Updated Successfully!', ToastAndroid.SHORT);
           console.log('res of editprofile ', res);
         } else {
+          dispatch(setUser(res.userdata));
+          navigation.navigate('P_Bottom_Navigation', {screen: 'P_Profile'});
           setIsLoading(false);
-          ToastAndroid.show('Errorr in Data Updating!', ToastAndroid.SHORT);
+          ToastAndroid.show('Data Uploaded!', ToastAndroid.SHORT);
         }
       })
       .catch(err => {
@@ -114,7 +117,7 @@ const P_Edit_Profile = ({navigation}) => {
                   />
                 </TouchableOpacity>
 
-                <Text style={styles.headerText}>Edit Profile</Text>
+                <Text style={styles.headerText}>{t('Edit')}</Text>
                 <View></View>
               </View>
             </ImageBackground>
@@ -178,7 +181,7 @@ const P_Edit_Profile = ({navigation}) => {
 
             <View style={{marginTop: wp(20)}}>
               <Button
-                title="Confirm"
+                title={t('Confirm')}
                 onPress={() => {
                   // navigation.navigate('Change_Password');
                   _EditAPi();

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -25,13 +26,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PostAPiwithToken} from '../../components/Apis/Api_Screen';
 import Loader from '../../components/Loader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 const Edit_Profile = ({navigation}) => {
   const user = useSelector(state => state?.user?.user);
-  console.log('user on Profile', user);
-
+  console.log('user on  EDIT Profile', user);
+  const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState(user?.image);
+  const [image, setImage] = useState(user?.image ? user?.image : null);
   const [phone, setphone] = useState(user?.phone_number);
   const [address, setaddress] = useState(user?.address);
   const [username, setusername] = useState(user?.username);
@@ -69,15 +71,18 @@ const Edit_Profile = ({navigation}) => {
 
     PostAPiwithToken({url: 'edit', Token: user.api_token}, formdata)
       .then(res => {
+        console.log('...d.sdashiahdh', res);
         if (res.status == 'success') {
           setIsLoading(false);
           dispatch(setUser(res.userdata));
-          navigation.navigate('Profile');
+          navigation.navigate('Bottom_Nav', {screen: 'Profile'});
           ToastAndroid.show('Data Updated Successfully!', ToastAndroid.SHORT);
 
           console.log('res of editprofile ', res);
         } else {
           setIsLoading(false);
+          dispatch(setUser(res.userdata));
+          navigation.navigate('Bottom_Nav', {screen: 'Profile'});
           ToastAndroid.show('Errorr in Data Updating!', ToastAndroid.SHORT);
         }
       })
@@ -115,7 +120,7 @@ const Edit_Profile = ({navigation}) => {
                   />
                 </TouchableOpacity>
 
-                <Text style={styles.headerText}>Edit Profile</Text>
+                <Text style={styles.headerText}>{t('Edit')}</Text>
                 <View></View>
               </View>
             </ImageBackground>
@@ -179,7 +184,7 @@ const Edit_Profile = ({navigation}) => {
 
             <View style={{marginTop: wp(20)}}>
               <Button
-                title="Confirm"
+                title={t('Confirm')}
                 onPress={() => {
                   // navigation.navigate('Change_Password');
                   _EditAPi();

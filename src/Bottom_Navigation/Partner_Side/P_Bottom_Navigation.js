@@ -12,9 +12,11 @@ import P_Notification from '../../screens/Partner_Side/P_Bottom_Screens/P_Notifi
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import P_Profile from '../../screens/Partner_Side/P_Bottom_Screens/P_Profile';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 const Tab = createBottomTabNavigator();
 const P_Bottom_Navigation = () => {
   const {bottom} = useSafeAreaInsets();
+  const {t} = useTranslation();
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -22,7 +24,7 @@ const P_Bottom_Navigation = () => {
         tabBarLabel: '',
         tabBarStyle: {
           height: wp(18),
-          bottom: Platform.OS == 'ios' ? bottom : 0,
+          // bottom: Platform.OS == 'ios' ? 10 : 0,
           width: wp(100),
           backgroundColor: Colors.white,
           position: 'absolute',
@@ -44,7 +46,7 @@ const P_Bottom_Navigation = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.focusedText}>Home</Text>
+                      <Text style={styles.focusedText}>{t('Home')}</Text>
                     </View>
                   ) : (
                     <View style={{alignItems: 'center'}}>
@@ -53,7 +55,7 @@ const P_Bottom_Navigation = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.unfocusedText}>Home</Text>
+                      <Text style={styles.unfocusedText}>{t('Home')}</Text>
                     </View>
                   )}
                 </View>
@@ -72,7 +74,9 @@ const P_Bottom_Navigation = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.focusedText}>Notification</Text>
+                      <Text style={styles.focusedText}>
+                        {t('Notification')}
+                      </Text>
                     </View>
                   ) : (
                     <View style={{alignItems: 'center'}}>
@@ -81,7 +85,9 @@ const P_Bottom_Navigation = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.unfocusedText}>Notification</Text>
+                      <Text style={styles.unfocusedText}>
+                        {t('Notification')}
+                      </Text>
                     </View>
                   )}
                 </View>
@@ -101,7 +107,7 @@ const P_Bottom_Navigation = () => {
                         size={28}
                       />
                       <Text style={[styles.focusedText, {marginTop: wp(1)}]}>
-                        Profile
+                        {t('Profile')}
                       </Text>
                     </View>
                   ) : (
@@ -112,7 +118,7 @@ const P_Bottom_Navigation = () => {
                         size={28}
                       />
                       <Text style={[styles.unfocusedText, {marginTop: wp(1)}]}>
-                        Profile
+                        {t('Profile')}
                       </Text>
                     </View>
                   )}

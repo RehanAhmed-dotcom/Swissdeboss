@@ -26,10 +26,28 @@ import SplashScreen from 'react-native-splash-screen';
 import {PostAPiwithFrom} from '../../../components/Apis/Api_Screen';
 import {setUser} from '../../../ReduxToolkit/Auth';
 import Loader from '../../../components/Loader';
+import {useTranslation} from 'react-i18next';
+import {add_language} from '../../../ReduxToolkit/LanguagesSlice';
 const P_Login = ({navigation, route}) => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
+  const language = useSelector(state => state.language.value);
+  console.log('language------', language);
+
+  useEffect(() => {
+    if (language === 'fr') {
+      dispatch(add_language(language));
+    } else if (language === 'en') {
+      dispatch(add_language(language));
+    } else if (language === 'it') {
+      dispatch(add_language(language));
+    } else if (language === 'de') {
+      dispatch(add_language(language));
+    }
+  }, [language, dispatch]);
+  const {t} = useTranslation();
 
   const userType = useSelector(state => state.userType.userType);
   console.log('type on on Login Partner Side', userType);
@@ -119,7 +137,7 @@ const P_Login = ({navigation, route}) => {
             }}>
             <Wrapper behavior="padding">
               <ScrollView>
-                <Text style={styles.header_text}>Login to continue</Text>
+                <Text style={styles.header_text}>{t('logintocontinue')}</Text>
                 <Image
                   source={icons.logo}
                   style={styles.logo}
@@ -153,7 +171,7 @@ const P_Login = ({navigation, route}) => {
                       style={styles.profile}
                     />
                     <TextInput
-                      placeholder="Password"
+                      placeholder={t('password')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       secureTextEntry={true}
@@ -172,12 +190,12 @@ const P_Login = ({navigation, route}) => {
                   onPress={() => {
                     navigation.navigate('P_Forgot');
                   }}>
-                  <Text style={styles.forget}>Forgot password?</Text>
+                  <Text style={styles.forget}>{t('forgotpassword')}?</Text>
                 </TouchableOpacity>
 
                 <View style={{marginTop: wp(22)}}>
                   <Button
-                    title="Log In"
+                    title={t('login')}
                     onPress={() => {
                       handleSubmit();
                     }}
@@ -191,8 +209,8 @@ const P_Login = ({navigation, route}) => {
                     navigation.navigate('P_Signup');
                   }}>
                   <Text style={styles.text}>
-                    Don’t have an account?{' '}
-                    <Text style={styles.create}>Create</Text>
+                    {t('Donthaveanaccount')}{' '}
+                    <Text style={styles.create}>{t('Create')}</Text>
                   </Text>
                 </TouchableOpacity>
                 <View style={{marginBottom: wp(6)}}></View>

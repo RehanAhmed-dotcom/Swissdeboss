@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useTransition} from 'react';
 import {Colors, fonts, icons, images} from '../../../constant/Index';
 import {
   widthPercentageToDP as wp,
@@ -21,10 +21,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {logoutUser} from '../../../ReduxToolkit/Auth';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {setUserTypeEmpty} from '../../../ReduxToolkit/Select_Type';
+import {useTranslation} from 'react-i18next';
 const Profile = ({navigation}) => {
   const user = useSelector(state => state?.user?.user);
   // console.log('user on Profile', user);
-
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const {top} = useSafeAreaInsets();
   return (
@@ -50,7 +51,7 @@ const Profile = ({navigation}) => {
                 />
               </TouchableOpacity>
 
-              <Text style={styles.headerText}>Profile</Text>
+              <Text style={styles.headerText}>{t('Profile')}</Text>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('Edit_Profile');
@@ -112,7 +113,7 @@ const Profile = ({navigation}) => {
 
           <View style={{marginTop: wp(20)}}>
             <Button
-              title="Change Password"
+              title={t('ChangePassword')}
               onPress={() => {
                 navigation.navigate('Change_Password');
               }}

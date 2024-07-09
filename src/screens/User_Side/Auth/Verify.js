@@ -27,9 +27,11 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import Loader from '../../../components/Loader';
+import {useTranslation} from 'react-i18next';
 
 const CELL_COUNT = 4;
 const Verify = ({navigation, route}) => {
+  const {t} = useTranslation();
   const {email} = route.params;
   console.log('email---------------', email);
   const [value, setValue] = useState('');
@@ -98,10 +100,10 @@ const Verify = ({navigation, route}) => {
               <Ionicons name="chevron-back-outline" color="black" size={26} />
             </TouchableOpacity>
 
-            <Text style={styles.header_text}>Verify</Text>
+            <Text style={styles.header_text}>{t('Verification')}</Text>
             <View></View>
           </View>
-          <Text style={styles.text}>Enter the Pin we send to your email</Text>
+          <Text style={styles.text}>{t('Entersecuritycode')}</Text>
           <View style={{marginTop: wp(16), paddingHorizontal: wp(10)}}>
             <CodeField
               ref={ref}
@@ -139,7 +141,7 @@ const Verify = ({navigation, route}) => {
 
           <View style={{marginTop: wp(30), marginBottom: wp(10)}}>
             <Button
-              title="Verify"
+              title={t('Verify')}
               onPress={() => {
                 verifyApi();
               }}

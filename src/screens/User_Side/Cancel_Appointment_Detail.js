@@ -22,7 +22,7 @@ import {PostAPiwithToken} from '../../components/Apis/Api_Screen';
 
 const Cancel_Appointment_Detail = ({navigation, route}) => {
   const {item} = route.params;
-  // console.log('item on cancel appointment detail', item);
+  console.log('item on cancel appointment detail', item);
   const user = useSelector(state => state?.user?.user);
   const [selected, setSelected] = useState(null); // Change initial state to null
   const [otherReason, setOtherReason] = useState(''); // Add state for other reason text

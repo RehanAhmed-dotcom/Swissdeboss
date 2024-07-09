@@ -21,13 +21,31 @@ import Button from '../../../components/Button';
 import SplashScreen from 'react-native-splash-screen';
 import {useFocusEffect} from '@react-navigation/native';
 import {AllGetAPI, PostAPiwithToken} from '../../../components/Apis/Api_Screen';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {useTranslation} from 'react-i18next';
+import {add_language} from '../../../ReduxToolkit/LanguagesSlice';
 const P_Home = ({navigation}) => {
   const user = useSelector(state => state?.user?.user);
+  const language = useSelector(state => state.language.value);
+  console.log('language------', language);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (language === 'fr') {
+      dispatch(add_language(language));
+    } else if (language === 'en') {
+      dispatch(add_language(language));
+    } else if (language === 'it') {
+      dispatch(add_language(language));
+    } else if (language === 'de') {
+      dispatch(add_language(language));
+    }
+  }, [language, dispatch]);
   console.log('user on p home.............................', user);
+  const {t} = useTranslation();
 
   useEffect(() => {
     SplashScreen.hide();
@@ -89,7 +107,16 @@ const P_Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {});
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Platform.OS === 'ios' &&
+        PushNotificationIOS.addNotificationRequest({
+          id: new Date().toString(),
+          title: remoteMessage.notification?.title,
+          body: remoteMessage.notification?.body,
+          category: 'userAction',
+          userInfo: remoteMessage.data,
+        });
+    });
     return unsubscribe;
   }, []);
 
@@ -128,6 +155,7 @@ const P_Home = ({navigation}) => {
   useEffect(() => {
     getdevicetoken();
   }, []);
+
   const {top} = useSafeAreaInsets();
   return (
     <View style={{flex: 1, backgroundColor: Colors.bback}}>
@@ -144,7 +172,7 @@ const P_Home = ({navigation}) => {
         }}>
         <ScrollView>
           <ImageBackground source={images.profileback} style={styles.backimage}>
-            <Text style={styles.headerText}>Home</Text>
+            <Text style={styles.headerText}>{t('Home')}</Text>
           </ImageBackground>
 
           <View style={styles.row}>
@@ -158,7 +186,7 @@ const P_Home = ({navigation}) => {
                 <Text style={styles.order}>
                   {appointmentStatus.pending_appointments}
                 </Text>
-                <Text style={styles.condition}>New{'\n'}Appointments</Text>
+                <Text style={styles.condition}>{t('New')}</Text>
               </View>
               <View style={styles.circle}>
                 <Image
@@ -180,7 +208,7 @@ const P_Home = ({navigation}) => {
                   {' '}
                   {appointmentStatus.active_appointments}
                 </Text>
-                <Text style={styles.condition}>Accepted{'\n'}Appointments</Text>
+                <Text style={styles.condition}>{t('accepted')}</Text>
               </View>
               <View style={styles.circle}>
                 <Image
@@ -205,7 +233,7 @@ const P_Home = ({navigation}) => {
                   {appointmentStatus.canceled_appointments}
                 </Text>
                 <Text style={styles.condition}>
-                  Cancelled{'\n'}Appointments
+                  {t('cancelledAppointment')}
                 </Text>
               </View>
               <View style={styles.circle}>
@@ -228,9 +256,7 @@ const P_Home = ({navigation}) => {
                   {' '}
                   {appointmentStatus.completed_appointments}
                 </Text>
-                <Text style={styles.condition}>
-                  Completed{'\n'}Appointments
-                </Text>
+                <Text style={styles.condition}>{t('Completed')}</Text>
               </View>
               <View style={styles.circle}>
                 <Image

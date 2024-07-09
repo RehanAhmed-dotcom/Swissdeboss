@@ -26,10 +26,29 @@ import {PostAPiwithFrom} from '../../../components/Apis/Api_Screen';
 import SplashScreen from 'react-native-splash-screen';
 import {setUser} from '../../../ReduxToolkit/Auth';
 import Loader from '../../../components/Loader';
+import {useTranslation} from 'react-i18next';
+import {add_language} from '../../../ReduxToolkit/LanguagesSlice';
 const Login = ({navigation, route}) => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+  const language = useSelector(state => state.language.value);
+  console.log('language------', language);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (language === 'fr') {
+      dispatch(add_language(language));
+    } else if (language === 'en') {
+      dispatch(add_language(language));
+    } else if (language === 'it') {
+      dispatch(add_language(language));
+    } else if (language === 'de') {
+      dispatch(add_language(language));
+    }
+  }, [language, dispatch]);
+  const {t} = useTranslation();
 
   const userType = useSelector(state => state.userType.userType);
   console.log('type on on Login', userType);
@@ -51,7 +70,6 @@ const Login = ({navigation, route}) => {
       ),
   });
   const [IsLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
   const _LoginAPI = (email: string, password: string) => {
     setIsLoading(true);
 
@@ -121,7 +139,7 @@ const Login = ({navigation, route}) => {
             }}>
             <Wrapper behavior="padding" style={{flex: 1}}>
               <ScrollView>
-                <Text style={styles.header_text}>Login to continue</Text>
+                <Text style={styles.header_text}>{t('logintocontinue')}</Text>
                 <Image
                   source={icons.logo}
                   style={styles.logo}
@@ -136,7 +154,7 @@ const Login = ({navigation, route}) => {
                       style={styles.profile}
                     />
                     <TextInput
-                      placeholder="E-mail"
+                      placeholder={t('email')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       onChangeText={handleChange('email')}
@@ -155,7 +173,7 @@ const Login = ({navigation, route}) => {
                       style={styles.profile}
                     />
                     <TextInput
-                      placeholder="Password"
+                      placeholder={t('password')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       secureTextEntry={true}
@@ -172,12 +190,12 @@ const Login = ({navigation, route}) => {
                 <TouchableOpacity
                   style={styles.fpass}
                   onPress={() => navigation.navigate('Forgot')}>
-                  <Text style={styles.forget}>Forgot password?</Text>
+                  <Text style={styles.forget}>{t('forgotpassword')}?</Text>
                 </TouchableOpacity>
 
                 <View style={{marginTop: wp(22)}}>
                   <Button
-                    title="Log In"
+                    title={t('login')}
                     onPress={() => {
                       handleSubmit();
                     }}
@@ -191,8 +209,8 @@ const Login = ({navigation, route}) => {
                     navigation.navigate('SignUp', {});
                   }}>
                   <Text style={styles.text}>
-                    Don’t have an account?{' '}
-                    <Text style={styles.create}>Create</Text>
+                    {t('Donthaveanaccount')}{' '}
+                    <Text style={styles.create}>{t('Create')}</Text>
                   </Text>
                 </TouchableOpacity>
                 <View style={{marginBottom: wp(6)}}></View>

@@ -13,7 +13,7 @@ import {
   TouchableWithoutFeedback,
   Switch,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useTransition} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -24,23 +24,20 @@ import SplashScreen from 'react-native-splash-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Button from '../../components/Button';
 import {Colors, fonts, images, icons} from '../../constant/Index';
-//   import {useDispatch, useSelector} from 'react-redux';
-//   import {setCurrentLanguage} from '../../redux/LanguagesSlice';
-//   import {LangData} from '../../Data/Index';
+import {useDispatch} from 'react-redux';
+import {add_language} from '../../ReduxToolkit/LanguagesSlice';
 const Languages = ({navigation}) => {
-  // const lang = useSelector(state => state.language.currentLanguage);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
     SplashScreen.hide();
   }, []);
-  //   const [ln, setln] = useState(lang ? lang : 'English');
-  const [ln, setln] = useState('English');
-
+  const [ln, setln] = useState('en');
+  console.log('dadnadadkada', ln);
   const setlanguage = () => {
-    //   dispatch(setCurrentLanguage(ln));
+    dispatch(add_language(ln));
     navigation.navigate('Select');
   };
-  // const currentlanguage = LangData[lang ? lang : 'English'];
+
   return (
     <View style={{flex: 1, backgroundColor: Colors.whitesmoke}}>
       <View style={styles.header}>
@@ -57,13 +54,13 @@ const Languages = ({navigation}) => {
         }}>
         <View style={{marginTop: wp(8)}}></View>
         {/* <Text style={styles.text}>{currentlanguage['20']}</Text> */}
-        <TouchableOpacity activeOpacity={1} onPress={() => setln('English')}>
+        <TouchableOpacity activeOpacity={1} onPress={() => setln('en')}>
           <View style={styles.list}>
             <Text
               style={[
                 styles.lng,
                 {
-                  color: ln == 'English' ? Colors.wild : 'black',
+                  color: ln == 'en' ? Colors.wild : 'black',
                 },
               ]}>
               English
@@ -71,22 +68,20 @@ const Languages = ({navigation}) => {
 
             <Icon1
               name={
-                ln == 'English'
-                  ? 'radio-button-checked'
-                  : 'radio-button-unchecked'
+                ln == 'en' ? 'radio-button-checked' : 'radio-button-unchecked'
               }
               size={22}
-              color={ln == 'English' ? Colors.wild : 'black'}
+              color={ln == 'en' ? Colors.wild : 'black'}
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={1} onPress={() => setln('French')}>
+        <TouchableOpacity activeOpacity={1} onPress={() => setln('fr')}>
           <View style={styles.list}>
             <Text
               style={[
                 styles.lng,
                 {
-                  color: ln == 'French' ? Colors.wild : 'black',
+                  color: ln == 'fr' ? Colors.wild : 'black',
                 },
               ]}>
               French
@@ -94,23 +89,21 @@ const Languages = ({navigation}) => {
 
             <Icon1
               name={
-                ln == 'French'
-                  ? 'radio-button-checked'
-                  : 'radio-button-unchecked'
+                ln == 'fr' ? 'radio-button-checked' : 'radio-button-unchecked'
               }
               size={22}
-              color={ln == 'French' ? Colors.wild : 'black'}
+              color={ln == 'fr' ? Colors.wild : 'black'}
             />
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity activeOpacity={1} onPress={() => setln('German')}>
+        <TouchableOpacity activeOpacity={1} onPress={() => setln('de')}>
           <View style={styles.list}>
             <Text
               style={[
                 styles.lng,
                 {
-                  color: ln == 'German' ? Colors.wild : 'black',
+                  color: ln == 'de' ? Colors.wild : 'black',
                 },
               ]}>
               German
@@ -118,23 +111,21 @@ const Languages = ({navigation}) => {
 
             <Icon1
               name={
-                ln == 'German'
-                  ? 'radio-button-checked'
-                  : 'radio-button-unchecked'
+                ln == 'de' ? 'radio-button-checked' : 'radio-button-unchecked'
               }
               size={22}
-              color={ln == 'German' ? Colors.wild : 'black'}
+              color={ln == 'de' ? Colors.wild : 'black'}
             />
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity activeOpacity={1} onPress={() => setln('Italian')}>
+        <TouchableOpacity activeOpacity={1} onPress={() => setln('it')}>
           <View style={styles.list}>
             <Text
               style={[
                 styles.lng,
                 {
-                  color: ln == 'Italian' ? Colors.wild : 'black',
+                  color: ln == 'it' ? Colors.wild : 'black',
                 },
               ]}>
               Italian
@@ -142,12 +133,10 @@ const Languages = ({navigation}) => {
 
             <Icon1
               name={
-                ln == 'Italian'
-                  ? 'radio-button-checked'
-                  : 'radio-button-unchecked'
+                ln == 'it' ? 'radio-button-checked' : 'radio-button-unchecked'
               }
               size={22}
-              color={ln == 'Italian' ? Colors.wild : 'black'}
+              color={ln == 'it' ? Colors.wild : 'black'}
             />
           </View>
         </TouchableOpacity>

@@ -25,6 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Pdf from 'react-native-pdf';
 
 import {useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 const Invoice = ({navigation, route}) => {
   const user = useSelector(state => state?.user?.user);
   console.log('useruseruseruser', user);
@@ -35,6 +36,7 @@ const Invoice = ({navigation, route}) => {
   const close = () => {
     setshow(false);
   };
+  const {t} = useTranslation();
   return (
     <View style={{flex: 1, backgroundColor: Colors.bback}}>
       <StatusBar translucent={true} />
@@ -93,13 +95,13 @@ const Invoice = ({navigation, route}) => {
               }}>
               <Back name="chevron-back-outline" color="#003C3C" size={22} />
             </TouchableOpacity>
-            <Text style={styles.headerText}>Invoice</Text>
+            <Text style={styles.headerText}>{t('Invoice')}</Text>
             <View></View>
           </View>
 
           <View style={styles.box}>
             <View style={styles.upper_box}>
-              <Text style={styles.header1}> {item.package.name}</Text>
+              <Text style={styles.header1}> {item.category.name}</Text>
               <Image
                 source={icons.acc}
                 resizeMode="contain"
@@ -109,25 +111,25 @@ const Invoice = ({navigation, route}) => {
 
             <View style={{marginTop: wp(4)}}>
               <View style={styles.row}>
-                <Text style={styles.info}>Username</Text>
+                <Text style={styles.info}>{t('Username')}</Text>
                 <Text style={styles.detail}>{user.username}</Text>
               </View>
               <View style={styles.line}></View>
 
               <View style={styles.row}>
-                <Text style={styles.info}>Phone Number</Text>
+                <Text style={styles.info}>{t('phone')}</Text>
                 <Text style={styles.detail}>{user.phone_number}</Text>
               </View>
               <View style={styles.line}></View>
 
               <View style={styles.row}>
-                <Text style={styles.info}>Date</Text>
+                <Text style={styles.info}>{t('date')}</Text>
                 <Text style={styles.detail}>{item.appointment.time}</Text>
               </View>
               <View style={styles.line}></View>
 
               <View style={styles.row}>
-                <Text style={styles.info}>Time</Text>
+                <Text style={styles.info}>{t('time')}</Text>
                 <Text style={styles.detail}>{item.appointment.date}</Text>
               </View>
               <View style={styles.line}></View>
@@ -135,7 +137,7 @@ const Invoice = ({navigation, route}) => {
 
             <View style={{marginTop: wp(4)}}>
               <View style={styles.row}>
-                <Text style={styles.category}>Damaged Category</Text>
+                <Text style={styles.category}>{t('damagedCategory')}</Text>
                 <Text style={styles.damage}>{item.category.name}</Text>
               </View>
             </View>
@@ -143,15 +145,15 @@ const Invoice = ({navigation, route}) => {
             <View style={{marginTop: wp(4)}}>
               {/* <View style={styles.row}> */}
               <Text style={[styles.Price, {textAlign: 'center'}]}>
-                {item.package.description}
+                {item.category.description}
               </Text>
               {/* </View> */}
             </View>
 
             <View style={{marginTop: wp(2), marginBottom: wp(4)}}>
               <View style={styles.row}>
-                <Text style={styles.category}>Service Fee</Text>
-                <Text style={styles.damage}>${item.package.price}</Text>
+                <Text style={styles.category}>{t('cars')}</Text>
+                <Text style={styles.damage}>{item.appointment.no_of_cars}</Text>
               </View>
             </View>
 
@@ -188,16 +190,16 @@ const Invoice = ({navigation, route}) => {
 
             <View style={{marginTop: wp(2), marginBottom: wp(4)}}>
               <View style={styles.row}>
-                <Text style={styles.category}>Technician Address</Text>
+                <Text style={styles.category}>{t('techadd')}</Text>
               </View>
               <Text style={styles.tectadd}>{item.address}</Text>
             </View>
-            <View style={styles.line}></View>
+            {/* <View style={styles.line}></View> */}
 
-            <View style={styles.bottom_View}>
+            {/* <View style={styles.bottom_View}>
               <Text style={styles.header1}>Sub Total</Text>
-              <Text style={styles.total}>${item.package.price}</Text>
-            </View>
+              <Text style={styles.total}>${item.category.price}</Text>
+            </View> */}
           </View>
 
           <View style={{marginBottom: 30}}></View>

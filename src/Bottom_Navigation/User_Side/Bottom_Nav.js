@@ -12,10 +12,12 @@ import {
 import {Colors, fonts, icons} from '../../constant/Index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 const Tab = createBottomTabNavigator();
 
 const Bottom_Nav = () => {
   const {bottom} = useSafeAreaInsets();
+  const {t} = useTranslation();
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -24,7 +26,7 @@ const Bottom_Nav = () => {
         tabBarStyle: {
           height: wp(18),
           width: wp(100),
-          bottom: Platform.OS == 'ios' ? bottom : 0,
+          // bottom: Platform.OS == 'ios' ? 10 : 0,
           backgroundColor: Colors.white,
           position: 'absolute',
         },
@@ -40,7 +42,7 @@ const Bottom_Nav = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.focusedText}>Home</Text>
+                      <Text style={styles.focusedText}>{t('Home')}</Text>
                     </View>
                   ) : (
                     <View style={{alignItems: 'center'}}>
@@ -49,7 +51,7 @@ const Bottom_Nav = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.unfocusedText}>Home</Text>
+                      <Text style={styles.unfocusedText}>{t('Home')}</Text>
                     </View>
                   )}
                 </View>
@@ -68,7 +70,9 @@ const Bottom_Nav = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.focusedText}>Appointment</Text>
+                      <Text style={styles.focusedText}>
+                        {t('Appointments')}
+                      </Text>
                     </View>
                   ) : (
                     <View style={{alignItems: 'center'}}>
@@ -77,7 +81,9 @@ const Bottom_Nav = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.unfocusedText}>Appointment</Text>
+                      <Text style={styles.unfocusedText}>
+                        {t('Appointments')}
+                      </Text>
                     </View>
                   )}
                 </View>
@@ -96,7 +102,9 @@ const Bottom_Nav = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.focusedText}>Notification</Text>
+                      <Text style={styles.focusedText}>
+                        {t('Notification')}
+                      </Text>
                     </View>
                   ) : (
                     <View style={{alignItems: 'center'}}>
@@ -105,7 +113,9 @@ const Bottom_Nav = () => {
                         resizeMode="contain"
                         style={styles.icon}
                       />
-                      <Text style={styles.unfocusedText}>Notification</Text>
+                      <Text style={styles.unfocusedText}>
+                        {t('Notification')}
+                      </Text>
                     </View>
                   )}
                 </View>
@@ -125,7 +135,7 @@ const Bottom_Nav = () => {
                         size={28}
                       />
                       <Text style={[styles.focusedText, {marginTop: wp(1)}]}>
-                        Profile
+                        {t('Profile')}
                       </Text>
                     </View>
                   ) : (
@@ -136,7 +146,7 @@ const Bottom_Nav = () => {
                         size={28}
                       />
                       <Text style={[styles.unfocusedText, {marginTop: wp(1)}]}>
-                        Profile
+                        {t('Profile')}
                       </Text>
                     </View>
                   )}

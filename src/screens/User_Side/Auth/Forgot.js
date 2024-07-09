@@ -23,8 +23,10 @@ import * as yup from 'yup';
 import {PostAPiwithFrom} from '../../../components/Apis/Api_Screen';
 import Loader from '../../../components/Loader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 const Forgot = ({navigation}) => {
   const {top} = useSafeAreaInsets();
+  const {t} = useTranslation();
   const _validation = yup.object({
     email: yup
       .string()
@@ -109,13 +111,10 @@ const Forgot = ({navigation}) => {
                   />
                 </TouchableOpacity>
 
-                <Text style={styles.header_text}>Forgot Password</Text>
+                <Text style={styles.header_text}>{t('forgotpassword')}</Text>
                 <View></View>
               </View>
-              <Text style={styles.text}>
-                To reset your password,you need your email or mobile number that
-                can be authenticated
-              </Text>
+              <Text style={styles.text}>{t('resetpasswordinfo')}</Text>
               <View style={styles.input_Box}>
                 <Image
                   source={icons.email}

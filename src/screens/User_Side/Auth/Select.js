@@ -7,21 +7,29 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useTransition} from 'react';
 import {Colors, fonts, icons, images} from '../../../constant/Index';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setUser} from '../../../ReduxToolkit/Auth';
 import {setUserType} from '../../../ReduxToolkit/Select_Type';
 import SplashScreen from 'react-native-splash-screen';
+import i18n from '../../../components/i18n';
+import {useTranslation} from 'react-i18next';
 const Select = ({navigation}) => {
+  // const lang = useSelector(state => state.language.value);
+  // console.log('lldlkadjahdagdugaudgjaggdaad', lang);
+
   const dispatch = useDispatch();
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
+  const {t} = useTranslation();
+  console.log('jdkjda', t);
   return (
     <View style={{flex: 1, backgroundColor: Colors.white}}>
       <ImageBackground source={images.selectback} style={{flex: 1}}>
@@ -52,7 +60,7 @@ const Select = ({navigation}) => {
                   resizeMode="contain"
                 />
               </TouchableOpacity>
-              <Text style={styles.type}>User</Text>
+              <Text style={styles.type}>{t('User')}</Text>
             </View>
 
             <View style={{alignItems: 'center'}}>
@@ -68,7 +76,7 @@ const Select = ({navigation}) => {
                   resizeMode="contain"
                 />
               </TouchableOpacity>
-              <Text style={styles.type}>Partner</Text>
+              <Text style={styles.type}>{t('Partner')}</Text>
             </View>
           </View>
         </View>

@@ -20,7 +20,9 @@ import {useFocusEffect} from '@react-navigation/native';
 import {AllGetAPI, PostAPiwithToken} from '../../../components/Apis/Api_Screen';
 import {useSelector} from 'react-redux';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import {useTranslation} from 'react-i18next';
 const Notification = ({navigation}) => {
+  const {t} = useTranslation();
   const user = useSelector(state => state?.user?.user);
   const [RecivedNoti, setRecivedNoti] = useState([]);
   console.log('dsdadadhaiuhd9080808098039810848q7347347q', RecivedNoti);
@@ -59,10 +61,7 @@ const Notification = ({navigation}) => {
         if (res.status == 'success') {
           setIsLoading(false);
 
-          // thankyouSheet.current.open();
-          // refRBSheet.current.close();
-
-          ToastAndroid.show('Data Updated Successfully!', ToastAndroid.SHORT);
+          ToastAndroid.show('Successfully! Deleted', ToastAndroid.SHORT);
           _NotificationApi();
           console.log('res of deleteapi ', res);
         }
@@ -79,7 +78,7 @@ const Notification = ({navigation}) => {
     <View style={{flex: 1, backgroundColor: Colors.bback}}>
       <StatusBar translucent={true} />
       <View style={{flex: 1, marginTop: StatusBar.currentHeight}}>
-        <Text style={styles.headerText}>Notification</Text>
+        <Text style={styles.headerText}>{t('Notification')}</Text>
         <ScrollView>
           {RecivedNoti.length === 0 ? (
             <View

@@ -53,13 +53,13 @@ const P_Invoice = ({navigation, route}) => {
       }
     }
   };
-  console.log(
-    'dalsjdladlajldjlajdljasdjl--------------------------------',
-    item.id,
-    item.user_id,
-    item.package_id,
-    item.package.category_id,
-  );
+  // console.log(
+  //   'dalsjdladlajldjlajdljasdjl--------------------------------',
+  //   item.id,
+  //   item.user_id,
+  //   item.package_id,
+  //   item.package.category_id,
+  // );
   const [address, setaddress] = useState('');
   const _validate = () => {
     if (!address) {
@@ -75,8 +75,8 @@ const P_Invoice = ({navigation, route}) => {
     const formdata = new FormData();
     formdata.append('status', 'Active');
     formdata.append('user_id', item.user_id);
-    formdata.append('package_id', item.package_id);
-    formdata.append('cat_id', item.package.category_id);
+    // formdata.append('package_id', item.package_id);
+    formdata.append('cat_id', item.category.id);
     formdata.append('address', address);
     {
       selectedDocument &&
@@ -101,6 +101,8 @@ const P_Invoice = ({navigation, route}) => {
           ToastAndroid.show('Order Accepted Sucessfully!', ToastAndroid.SHORT);
           navigation.navigate('Services_Detail');
           console.log('Acepteddd==================', res);
+        } else {
+          setIsLoading(false);
         }
         console.log('order Changed successfully', res);
       })
@@ -136,7 +138,7 @@ const P_Invoice = ({navigation, route}) => {
 
             <View style={styles.box}>
               <View style={styles.upper_box}>
-                <Text style={styles.header1}>{item.package.name}</Text>
+                <Text style={styles.header1}>{item.category.name}</Text>
                 <Image
                   source={icons.acc}
                   resizeMode="contain"
@@ -173,22 +175,20 @@ const P_Invoice = ({navigation, route}) => {
               <View style={{marginTop: wp(4)}}>
                 <View style={styles.row}>
                   <Text style={styles.category}>Damaged Category</Text>
-                  <Text style={styles.damage}>
-                    {item.package.category.name}
-                  </Text>
+                  <Text style={styles.damage}>{item.category.name}</Text>
                 </View>
               </View>
 
               <View style={{marginTop: wp(4)}}>
-                <Text style={styles.Price}>{item.package.description}</Text>
+                <Text style={styles.Price}>{item.category.description}</Text>
 
                 <View style={styles.line}></View>
               </View>
 
               <View style={{marginTop: wp(2), marginBottom: wp(4)}}>
                 <View style={styles.row}>
-                  <Text style={styles.category}>Service Fee</Text>
-                  <Text style={styles.damage}>$100</Text>
+                  <Text style={styles.category}>Cars</Text>
+                  <Text style={styles.damage}>{item.no_of_cars}</Text>
                 </View>
               </View>
               <View style={styles.line}></View>
@@ -276,22 +276,23 @@ const P_Invoice = ({navigation, route}) => {
                 </Text>
               </TouchableOpacity>
               <View style={styles.bottom_View}>
-                <Text style={styles.header1}>Sub Total</Text>
-                <Text style={styles.total}>$299</Text>
+                {/* <Text style={styles.header1}>Sub Total</Text>
+                <Text style={styles.total}>$299</Text> */}
+                <View style={{}}>
+                  <Button
+                    title="Send Invoice to Customer"
+                    onPress={() => {
+                      if (_validate()) {
+                        AcceptedApi();
+                      } else {
+                        ToastAndroid.show('Enter Address!', ToastAndroid.SHORT);
+                      }
+                    }}
+                  />
+                </View>
               </View>
             </View>
-            <View style={{marginTop: wp(14), marginBottom: wp(10)}}>
-              <Button
-                title="Send Invoice to Customer"
-                onPress={() => {
-                  if (_validate()) {
-                    AcceptedApi();
-                  } else {
-                    ToastAndroid.show('Enter Address!', ToastAndroid.SHORT);
-                  }
-                }}
-              />
-            </View>
+            <View style={{marginBottom: 20}}></View>
           </ScrollView>
         </Wrapper>
       </View>

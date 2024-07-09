@@ -17,7 +17,7 @@ import Back from 'react-native-vector-icons/Ionicons';
 import {Colors, fonts, images} from '../../constant/Index';
 const Appointment_Detail = ({navigation, route}) => {
   const {item} = route.params;
-  // console.log('item on appointment detail', item);
+  console.log('item on appointment detail', item);
 
   return (
     <View style={{flex: 1, backgroundColor: Colors.bback}}>
@@ -32,32 +32,41 @@ const Appointment_Detail = ({navigation, route}) => {
             }}>
             <Back name="chevron-back-outline" color="white" size={22} />
           </TouchableOpacity>
-          <Image source={{uri: item.images[0].image}} style={styles.image} />
+          <Image
+            source={
+              item.images[0].image ? {uri: item.images[0].image} : images.clean1
+            }
+            style={styles.image}
+          />
           <View style={styles.lower_View}>
-            <Text style={styles.headerText}>{item.package.name}</Text>
+            <Text style={styles.headerText}>{item.category.name}</Text>
             <Text style={styles.Heading}>About</Text>
             <Text style={styles.detail}>{item.description}</Text>
             <View style={{marginTop: wp(2)}}>
               <View style={styles.row}>
                 <Text style={styles.categ}>Category</Text>
-                <Text style={styles.type}>{item.package.category.name}</Text>
+                <Text style={styles.type}>{item.category.name}</Text>
               </View>
             </View>
-
             <View style={{marginTop: wp(2)}}>
-              <Text style={styles.text}>{item.package.time}</Text>
-
-              <Text style={[styles.text, {marginTop: wp(6)}]}>
-                {item.package.description}
-              </Text>
+              <View style={styles.row}>
+                <Text style={styles.categ}>Date</Text>
+                <Text style={styles.type}>{item.date}</Text>
+              </View>
+            </View>
+            <View style={{marginTop: wp(2)}}>
+              <View style={styles.row}>
+                <Text style={styles.categ}>Time</Text>
+                <Text style={styles.type}>{item.time}</Text>
+              </View>
             </View>
 
             <View style={styles.line}></View>
 
             <View style={{}}>
               <View style={[styles.row, {marginTop: wp(0)}]}>
-                <Text style={styles.categ}>Service Fee</Text>
-                <Text style={styles.type}>{item.package.price} CHF</Text>
+                <Text style={styles.categ}>Number Of Cars</Text>
+                <Text style={styles.type}>{item.no_of_cars} </Text>
               </View>
 
               <View style={styles.line}></View>

@@ -24,8 +24,11 @@ import {useFocusEffect} from '@react-navigation/native';
 import {AllGetAPI} from '../../../components/Apis/Api_Screen';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {setUserTypeEmpty} from '../../../ReduxToolkit/Select_Type';
+import {useTranslation} from 'react-i18next';
 const P_Profile = ({navigation}) => {
   const dispatch = useDispatch();
+  const {t} = useTranslation();
+
   const user = useSelector(state => state?.user?.user);
   const [getadmin, setgetadmin] = useState([]);
   const [IsLoading, setIsLoading] = useState(false);
@@ -75,7 +78,7 @@ const P_Profile = ({navigation}) => {
                 />
               </TouchableOpacity>
 
-              <Text style={styles.headerText}>Profile</Text>
+              <Text style={styles.headerText}>{t('Profile')}</Text>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('P_Edit_Profile');
@@ -92,7 +95,7 @@ const P_Profile = ({navigation}) => {
           <View style={styles.circle}>
             <Image
               source={user.image ? {uri: user.image} : images.profile}
-              resizeMode="contain"
+              resizeMode="cover"
               style={styles.profilepic}
             />
           </View>
@@ -145,7 +148,7 @@ const P_Profile = ({navigation}) => {
 
           <View style={{marginTop: wp(20)}}>
             <Button
-              title="Chat Support"
+              title={t('ChatSupport')}
               onPress={() => {
                 navigation.navigate('Chat_Support', {getadmin: getadmin});
               }}
@@ -154,7 +157,7 @@ const P_Profile = ({navigation}) => {
 
           <View style={{marginTop: wp(4)}}>
             <Button
-              title="Change Password"
+              title={t('ChangePassword')}
               onPress={() => {
                 navigation.navigate('P_Change_Password');
               }}

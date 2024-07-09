@@ -51,6 +51,7 @@ const images = {
   profile: require('../assets/Images/profile.jpg'),
   selectback: require('../assets/Images/selectback.jpg'),
   pdf: require('../assets/Images/pdf.png'),
+  upload: require('../assets/Images/upload.png'),
 
   //noproperty   nonoti   invoice
 };
@@ -88,6 +89,7 @@ const icons = {
   arrow: require('../assets/Icons/arrow.png'),
   data: require('../assets/Icons/data.png'),
   new: require('../assets/Icons/new.png'),
+  carsno: require('../assets/Icons/carsno.png'),
 };
 
 export {images, fonts, icons, Colors};

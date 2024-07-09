@@ -23,10 +23,11 @@ import {useFocusEffect} from '@react-navigation/native';
 import {AllGetAPI} from '../../components/Apis/Api_Screen';
 import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 
 const Accepted_Detail = ({navigation}) => {
   const user = useSelector(state => state?.user?.user);
-
+  const {t} = useTranslation();
   console.log('user on p home.............................', user);
   const [PendingData, setPendingData] = useState([]);
   const _FetchAppointmentsAPiPending = () => {
@@ -68,7 +69,7 @@ const Accepted_Detail = ({navigation}) => {
               }}>
               <Back name="chevron-back-outline" color="#003C3C" size={22} />
             </TouchableOpacity>
-            <Text style={styles.headerText}>Accepted Appointments</Text>
+            <Text style={styles.headerText}>{t('appoint')}</Text>
             <View></View>
           </View>
 
@@ -101,7 +102,7 @@ const Accepted_Detail = ({navigation}) => {
                           marginLeft: wp(2),
                         }}>
                         <Text numberOfLines={1} style={styles.type}>
-                          {item.package.category.name}
+                          {item.category.name}
                         </Text>
 
                         <Text numberOfLines={3} style={styles.des}>

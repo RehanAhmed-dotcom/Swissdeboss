@@ -2,7 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  ImageBackground,
   StatusBar,
   Image,
   TouchableOpacity,
@@ -26,6 +25,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {PostAPiwithFrom} from '../../../components/Apis/Api_Screen';
 import {setUser} from '../../../ReduxToolkit/Auth';
 import Loader from '../../../components/Loader';
+import {useTranslation} from 'react-i18next';
+
 const P_Signup = ({navigation}) => {
   const type = useSelector(state => state?.userType?.userType);
   console.log('type on on partner side signup', type);
@@ -63,14 +64,10 @@ const P_Signup = ({navigation}) => {
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
         'Must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character',
       ),
-    // repassword: yup
-    //   .string()
-    //   .oneOf([yup.ref('password'), null], 'Passwords must match')
-    //   .required('Please confirm your password'),
-    image: yup.string().required('Please select an image'),
     mobile: yup.string().required('Mobile number is required'),
-    address: yup.string().required('Address  is required'),
+    address: yup.string().required('Address is required'),
   });
+
   const dispatch = useDispatch();
   const [IsLoading, setIsLoading] = useState(false);
 
@@ -85,7 +82,6 @@ const P_Signup = ({navigation}) => {
     setIsLoading(true);
 
     const formdata = new FormData();
-    //username   type
     formdata.append('type', type);
     formdata.append('username', username);
     formdata.append('email', email);
@@ -106,7 +102,6 @@ const P_Signup = ({navigation}) => {
         if (res.status == 'success') {
           setIsLoading(false);
           dispatch(setUser(res.userdata));
-          // Dispatching the setUser action with user details and userType
 
           ToastAndroid.show(
             'Your Account has been created!',
@@ -128,7 +123,10 @@ const P_Signup = ({navigation}) => {
         console.log('api error', err);
       });
   };
+
   const Wrapper = Platform.OS == 'ios' ? KeyboardAvoidingView : View;
+  const {t} = useTranslation();
+
   return (
     <Formik
       initialValues={{
@@ -142,7 +140,6 @@ const P_Signup = ({navigation}) => {
       }}
       validateOnMount={true}
       onSubmit={values => {
-        // console.log('values', values);
         _registerAPI(
           values.username,
           values.email,
@@ -178,7 +175,7 @@ const P_Signup = ({navigation}) => {
             }}>
             <Wrapper behavior="padding">
               <ScrollView>
-                <Text style={styles.header_text}>Create account</Text>
+                <Text style={styles.header_text}>{t('CreateAccount')}</Text>
                 <TouchableOpacity
                   style={styles.too}
                   onPress={() => pickImage(setFieldValue)}>
@@ -189,9 +186,6 @@ const P_Signup = ({navigation}) => {
                     borderRadius={100}
                   />
                 </TouchableOpacity>
-                {errors.image && touched.image && (
-                  <Text style={[styles.imageerr]}>{errors.image}</Text>
-                )}
 
                 <View style={{marginTop: wp(6)}}>
                   <View style={styles.input_Box}>
@@ -201,7 +195,7 @@ const P_Signup = ({navigation}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Username"
+                      placeholder={t('Username')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       onChangeText={handleChange('username')}
@@ -221,7 +215,7 @@ const P_Signup = ({navigation}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Password"
+                      placeholder={t('password')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       secureTextEntry={true}
@@ -261,7 +255,7 @@ const P_Signup = ({navigation}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Mobile"
+                      placeholder={t('Mobile')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       keyboardType="phone-pad"
@@ -282,7 +276,7 @@ const P_Signup = ({navigation}) => {
                       style={styles.icon}
                     />
                     <TextInput
-                      placeholder="Address"
+                      placeholder={t('Address')}
                       placeholderTextColor={Colors.verylightgray}
                       style={styles.input}
                       onChangeText={handleChange('address')}
@@ -297,7 +291,7 @@ const P_Signup = ({navigation}) => {
 
                 <View style={{marginTop: wp(16)}}>
                   <Button
-                    title="Sign up"
+                    title={t('Signup')}
                     onPress={() => {
                       handleSubmit();
                     }}
@@ -311,8 +305,8 @@ const P_Signup = ({navigation}) => {
                     navigation.navigate('P_Login');
                   }}>
                   <Text style={styles.text}>
-                    Already have a account?{' '}
-                    <Text style={styles.create}>Login</Text>
+                    {t('Alreadyhaveanaccount')}?{' '}
+                    <Text style={styles.create}>{t('login')}</Text>
                   </Text>
                 </TouchableOpacity>
 
